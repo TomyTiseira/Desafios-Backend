@@ -134,6 +134,12 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
     res.redirect("/login");
   });
 
+  app.get("/datos", (req, res) => {
+    res.send(
+      `Servidor express Nginx en puerto ${configMinimist.puerto} - PID: ${process.pid}`
+    );
+  });
+
   io.on("connection", async (client) => {
     const messagesArray = (await dbDAO.getMessages()) || [];
 

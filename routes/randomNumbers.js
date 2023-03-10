@@ -9,7 +9,6 @@ const longProcess = fork("./helpers/longProcess.js");
 randomNumbersRouter.get("/", (req, res) => {
   const { cant } = req.query;
 
-  // res.send(`Servidor express Nginx en puerto ${PORT} - PID: ${process.pid}`);
   longProcess.send(parseInt(cant) || 100000000);
 
   longProcess.on("message", (message) => {
