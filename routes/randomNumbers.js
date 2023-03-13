@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { fork } from "child_process";
-import { configMinimist } from "../config/minimist.js";
 
 const randomNumbersRouter = Router();
 

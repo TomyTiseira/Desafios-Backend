@@ -15,6 +15,7 @@ import infoRouter from "./routes/info.js";
 import randomNumbersRouter from "./routes/randomNumbers.js";
 import cluster from "cluster";
 import { cpus } from "os";
+import { logger } from "./config/winston.js";
 
 const app = express();
 const server = createServer(app);
@@ -57,10 +58,12 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
   });
 } else {
   app.get("/", (req, res) => {
+    const { url, method } = req;
     if (req.session.email) {
       req.session.count++;
 
       req.session.cookie.maxAge = timeCookie;
+      logger.info(`El método y la ruta son: ${method} ${url}.`);
       res.render("chat", {
         email: req.session.email,
       });
@@ -71,14 +74,19 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
   });
 
   app.get("/login", (req, res) => {
+    const { url, method } = req;
+    logger.info(`El método y la ruta son: ${method} ${url}`);
     res.render("login");
   });
 
   app.get("/signup", (req, res) => {
+    const { url, method } = req;
+    logger.info(`El método y la ruta son: ${method} ${url}`);
     res.render("signup");
   });
 
   app.post("/login", async (req, res) => {
+    const { url, method } = req;
     const { email, password } = req.body;
 
     const users = await usersDAO.getUsers();
@@ -88,6 +96,9 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
     );
 
     if (!user) {
+      logger.error(
+        `El método y la ruta son: ${method} ${url}. Datos inválidos.`
+      );
       res.status(403).render("loginError", {
         mensaje: "Datos inválidos",
       });
@@ -97,10 +108,13 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
     req.session.email = email;
     req.session.count = (req.session.count ?? 0) + 1;
 
+    logger.info(`El método y la ruta son: ${method} ${url}.`);
+
     res.redirect("/");
   });
 
   app.post("/signup", async (req, res) => {
+    const { url, method } = req;
     const { email, password } = req.body;
 
     const users = await usersDAO.getUsers();
@@ -108,6 +122,9 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
     const existUser = users.find((user) => user.email === email);
 
     if (existUser) {
+      logger.error(
+        `El método y la ruta son: ${method} ${url}. El usuario ya existe.`
+      );
       res.status(403).render("loginError", {
         mensaje: "El usuario ya existe",
       });
@@ -116,10 +133,13 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
 
     await usersDAO.addUser({ email, password: hashSync(password, 10) });
 
+    logger.info(`El método y la ruta son: ${method} ${url}.`);
+
     res.redirect("/login");
   });
 
   app.get("/logout", (req, res) => {
+    const { url, method } = req;
     if (req.session.email) {
       const email = req.session.email;
       req.session.destroy(() => {
@@ -131,13 +151,9 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
       return;
     }
 
-    res.redirect("/login");
-  });
+    logger.info(`El método y la ruta son: ${method} ${url}.`);
 
-  app.get("/datos", (req, res) => {
-    res.send(
-      `Servidor express Nginx en puerto ${configMinimist.puerto} - PID: ${process.pid}`
-    );
+    res.redirect("/login");
   });
 
   io.on("connection", async (client) => {
@@ -188,6 +204,12 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
   app.use("/api/productos-test", productTestRouter);
   app.use("/info", infoRouter);
   app.use("/api/randoms", randomNumbersRouter);
+
+  app.get("*", (req, res) => {
+    const { url, method } = req;
+    logger.warn(`Ruta ${method} ${url} no implementada.`);
+    res.send(`Ruta ${method} ${url} no está implementada`);
+  });
 
   server.listen(configMinimist.puerto);
 }

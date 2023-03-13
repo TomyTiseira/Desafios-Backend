@@ -1,9 +1,10 @@
+import compression from "compression";
 import { Router } from "express";
 import { cpus } from "os";
 
 const infoRouter = Router();
 
-infoRouter.get("/", (req, res) => {
+infoRouter.get("/", compression(), (req, res) => {
   const info = {
     argumentosEntrada: process.argv,
     SO: process.platform,
