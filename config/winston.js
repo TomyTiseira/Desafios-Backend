@@ -12,7 +12,7 @@ const buildLogger = () => {
       new winston.transports.File({ filename: "error.log", level: "error" }),
     ],
   });
-  console.log(1);
+  // console.log(1);
   return prodLogger;
 };
 

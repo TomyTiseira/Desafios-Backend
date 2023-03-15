@@ -16,6 +16,7 @@ infoRouter.get("/", compression(), (req, res) => {
     procesadores: cpus().length,
   };
 
+  // console.log(info);
   res.json(info);
 });
 
