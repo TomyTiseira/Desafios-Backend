@@ -154,7 +154,7 @@ Luego utilizaremos Autocannon en línea de comandos, emulando 100 conexiones con
 Realizar un informe en formato pdf sobre las pruebas realizadas incluyendo los resultados de todos los test (texto e imágenes).
 Al final incluir la conclusión obtenida a partir del análisis de los datos.
 
-artillery quick --count 50 -n 20 "http://localhost:8080/info" > result_con_consoleLog.txt
+<!-- artillery quick --count 50 -n 20 "http://localhost:8080/info" > result_con_consoleLog.txt
 artillery quick --count 50 -n 20 "http://localhost:8080/info" > result_sin_consoleLog.txt
 node --prof-process .\isolate-0000015009DB11F0-11184-v8.log > profiler_con_console_log.txt
-node --prof-process .\isolate-0000023E4B15EE40-17248-v8.log > profiler_sin_console_log.txt
+node --prof-process .\isolate-0000023E4B15EE40-17248-v8.log > profiler_sin_console_log.txt -->
