@@ -1,6 +1,6 @@
 import { Message, User } from "../model/index.js";
 
-class ContainerMongoDb {
+class MessagesMongoDb {
   addMessage = async (messageToAdd) => {
     const message = new Message(messageToAdd);
 
@@ -32,7 +32,7 @@ class UsersMongoDb {
   getUsers = async () => await User.find({});
 }
 
-const containerMongoDb = new ContainerMongoDb();
+// const mongoDbDA = new MessagesMongoDb();
 export const usersMongoDb = new UsersMongoDb();
 
-export default containerMongoDb;
+export default MessagesMongoDb;

@@ -1,10 +1,8 @@
 import mongoose from "mongoose";
-import MongoDAO from "../DAOs/mongoDAOs.js";
 import admin from "firebase-admin";
 import serviceAccount from "./credentials.json" assert { type: "json" };
-import FirebaseDAO from "../DAOs/firebaseDAOs.js";
-import ArchivoDAO from "../DAOs/archivoDAOs.js";
 import { firebaseConnection, mongoConnection } from "./enviroment.js";
+import MessagesMongoDb from "../dataAccess/mongoDA.js";
 
 let isConnected;
 let dbDAO;
@@ -23,7 +21,7 @@ const connectToDb = async (db) => {
       switch (db) {
         case "mongo":
           await mongoose.connect(mongoConnection);
-          dbDAO = new MongoDAO();
+          dbDAO = new MessagesMongoDb();
           break;
         case "firebase":
           connectToFirebase();

@@ -7,8 +7,6 @@ import productTestRouter from "./routes/productos-test.js";
 import { dbDAO } from "./config/connectToDb.js";
 import { denormalizer, normalizer } from "./utils/normalizr.js";
 import MongoStore from "connect-mongo";
-import { usersDAO } from "./DAOs/mongoDAOs.js";
-import { compareSync, hashSync } from "bcrypt";
 import { secretSession, sessionConnection } from "./config/enviroment.js";
 import { configMinimist } from "./config/minimist.js";
 import infoRouter from "./routes/info.js";
@@ -16,6 +14,8 @@ import randomNumbersRouter from "./routes/randomNumbers.js";
 import cluster from "cluster";
 import { cpus } from "os";
 import { logger } from "./config/winston.js";
+import { timeCookie } from "./config/constans.js";
+import chatRouter from "./routes/chat.js";
 
 const app = express();
 const server = createServer(app);
@@ -28,8 +28,6 @@ app.use(express.static("./public"));
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
-
-const timeCookie = 600000;
 
 app.use(
   session({
@@ -57,115 +55,11 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
     cluster.fork();
   });
 } else {
-  app.get("/", (req, res) => {
-    const { url, method } = req;
-    if (req.session.email) {
-      req.session.count++;
-
-      req.session.cookie.maxAge = timeCookie;
-      logger.info(`El método y la ruta son: ${method} ${url}.`);
-      res.render("chat", {
-        email: req.session.email,
-      });
-      return;
-    }
-
-    res.redirect("/login");
-  });
-
-  app.get("/login", (req, res) => {
-    const { url, method } = req;
-    logger.info(`El método y la ruta son: ${method} ${url}`);
-    res.render("login");
-  });
-
-  app.get("/signup", (req, res) => {
-    const { url, method } = req;
-    logger.info(`El método y la ruta son: ${method} ${url}`);
-    res.render("signup");
-  });
-
-  app.post("/login", async (req, res) => {
-    const { url, method } = req;
-    const { email, password } = req.body;
-
-    const users = await usersDAO.getUsers();
-
-    const user = users.find(
-      (user) => user.email === email && compareSync(password, user.password)
-    );
-
-    if (!user) {
-      logger.error(
-        `El método y la ruta son: ${method} ${url}. Datos inválidos.`
-      );
-      res.status(403).render("loginError", {
-        mensaje: "Datos inválidos",
-      });
-      return;
-    }
-
-    req.session.email = email;
-    req.session.count = (req.session.count ?? 0) + 1;
-
-    logger.info(`El método y la ruta son: ${method} ${url}.`);
-
-    res.redirect("/");
-  });
-
-  app.post("/signup", async (req, res) => {
-    const { url, method } = req;
-    const { email, password } = req.body;
-
-    const users = await usersDAO.getUsers();
-
-    const existUser = users.find((user) => user.email === email);
-
-    if (existUser) {
-      logger.error(
-        `El método y la ruta son: ${method} ${url}. El usuario ya existe.`
-      );
-      res.status(403).render("loginError", {
-        mensaje: "El usuario ya existe",
-      });
-      return;
-    }
-
-    await usersDAO.addUser({ email, password: hashSync(password, 10) });
-
-    logger.info(`El método y la ruta son: ${method} ${url}.`);
-
-    res.redirect("/login");
-  });
-
-  app.get("/logout", (req, res) => {
-    const { url, method } = req;
-    if (req.session.email) {
-      const email = req.session.email;
-      req.session.destroy(() => {
-        res.render("logout", {
-          email,
-        });
-      });
-
-      return;
-    }
-
-    logger.info(`El método y la ruta son: ${method} ${url}.`);
-
-    res.redirect("/login");
-  });
-
   io.on("connection", async (client) => {
     const messagesArray = (await dbDAO.getMessages()) || [];
 
     const normalizedData = normalizer(messagesArray);
-
-    // console.log(JSON.stringify(normalizedData, null, 2));
-
     const denormalizedData = denormalizer(normalizedData);
-
-    // console.log(JSON.stringify(denormalizedData, null, 2));
 
     if (denormalizedData?.messages[0]?._doc) {
       let data = {
@@ -204,6 +98,7 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
   app.use("/api/productos-test", productTestRouter);
   app.use("/info", infoRouter);
   app.use("/api/randoms", randomNumbersRouter);
+  app.use("/", chatRouter);
 
   app.get("*", (req, res) => {
     const { url, method } = req;
