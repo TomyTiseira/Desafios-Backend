@@ -1,22 +1,30 @@
 import { compareSync } from "bcrypt";
+import { usersMongoDb } from "../../dataAccess/mongoDA.js";
 
 const login = async (email, password) => {
-  const users = await usersMongoDb.getUsers();
+  try {
+    const users = await usersMongoDb.getUsers();
 
-  const existUser = users.find(
-    (user) => user.email === email && compareSync(password, user.password)
-  );
+    const existUser = users.find(
+      (user) => user.email === email && compareSync(password, user.password)
+    );
 
-  if (!existUser) {
+    if (!existUser) {
+      return {
+        success: false,
+        error: "Datos inválidos",
+      };
+    }
+
+    return {
+      success: true,
+    };
+  } catch (e) {
     return {
       success: false,
-      error: "Datos inválidos",
+      error: e.message,
     };
   }
-
-  return {
-    success: true,
-  };
 };
 
 export default login;
