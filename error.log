@@ -1,5 +1,0 @@
-{"level":"error","message":"El método y la ruta son: POST /signup. El usuario ya existe.","timestamp":"2023-04-14T14:28:45.584Z"}
-{"level":"error","message":"El método y la ruta son: POST /login. Datos inválidos.","timestamp":"2023-04-14T14:28:52.027Z"}
-{"level":"error","message":"El método y la ruta son: POST /signup. hashSync is not defined.","timestamp":"2023-04-14T14:28:58.374Z"}
-{"level":"error","message":"El método y la ruta son: POST /signup. El usuario ya existe.","timestamp":"2023-04-14T14:30:54.061Z"}
-{"level":"error","message":"El método y la ruta son: POST /login. Datos inválidos.","timestamp":"2023-04-14T14:31:01.158Z"}
