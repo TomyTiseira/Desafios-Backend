@@ -1,8 +1,8 @@
 import fs from "fs";
 import { fileMessages } from "../config/constans.js";
 
-class ContainerArchivo {
-  constructor(fileMessages) {
+class ArchivoDAO {
+  constructor() {
     this.fileMessages = fileMessages;
   }
 
@@ -18,6 +18,4 @@ class ContainerArchivo {
   };
 }
 
-const containerArchivo = new ContainerArchivo(fileMessages);
-
-export default containerArchivo;
+export default ArchivoDAO;

@@ -1,9 +1,10 @@
-import { hashSync } from "bcrypt";
-import { usersMongoDb } from "../../dataAccess/mongoDA.js";
+// import { hashSync } from "bcrypt";
+import { addUser, getUsers } from "../../dto/users.js";
+// import { usersMongoDb } from "../../dao/mongoDA.js";
 
 const signup = async (email, password) => {
   try {
-    const users = await usersMongoDb.getUsers();
+    const users = await getUsers();
 
     const existUser = users.find((user) => user.email === email);
 
@@ -14,7 +15,7 @@ const signup = async (email, password) => {
       };
     }
 
-    await usersMongoDb.addUser({ email, password: hashSync(password, 10) });
+    await addUser({ email, password });
 
     return {
       success: true,

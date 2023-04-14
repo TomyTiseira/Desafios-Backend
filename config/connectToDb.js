@@ -1,12 +1,18 @@
 import mongoose from "mongoose";
 import admin from "firebase-admin";
 import serviceAccount from "./credentials.json" assert { type: "json" };
-import { firebaseConnection, mongoConnection } from "./enviroment.js";
-import MessagesMongoDb from "../dataAccess/mongoDA.js";
+import {
+  firebaseConnection,
+  mongoConnection,
+  persistence,
+} from "./enviroment.js";
+import MessagesMongoDb from "../dao/mongoDA.js";
+import { logger } from "./winston.js";
+import FirebaseDAO from "../dao/firebaseDA.js";
+import ArchivoDAO from "../dao/archivoDA.js";
 
 let isConnected;
 let dbDAO;
-const db = "mongo";
 
 const connectToFirebase = () => {
   admin.initializeApp({
@@ -15,10 +21,10 @@ const connectToFirebase = () => {
   });
 };
 
-const connectToDb = async (db) => {
+const connectToDb = async () => {
   if (!isConnected) {
     try {
-      switch (db) {
+      switch (persistence) {
         case "mongo":
           await mongoose.connect(mongoConnection);
           dbDAO = new MessagesMongoDb();
@@ -35,12 +41,12 @@ const connectToDb = async (db) => {
       isConnected = true;
       return;
     } catch (e) {
-      console.log(e.message);
+      logger.error(`Error al acceder a la base de datos. ${e.message}`);
     }
   }
 
   return;
 };
 
-connectToDb(db);
+connectToDb(persistence);
 export { dbDAO };

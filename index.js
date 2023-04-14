@@ -14,6 +14,7 @@ import { logger } from "./config/winston.js";
 import { timeCookie } from "./config/constans.js";
 import chatRouter from "./routes/chat.js";
 import { createIo } from "./controllers/socket/socket.js";
+import notImplementedRouter from "./routes/notImplemented.js";
 
 const app = express();
 const server = createServer(app);
@@ -58,12 +59,7 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
   app.use("/info", infoRouter);
   app.use("/api/randoms", randomNumbersRouter);
   app.use("/", chatRouter);
-
-  app.get("*", (req, res) => {
-    const { url, method } = req;
-    logger.warn(`Ruta ${method} ${url} no implementada.`);
-    res.send(`Ruta ${method} ${url} no está implementada`);
-  });
+  app.use("*", notImplementedRouter);
 
   server.listen(configMinimist.puerto);
 }

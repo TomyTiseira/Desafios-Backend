@@ -1,7 +1,7 @@
 import admin from "firebase-admin";
 import { collectionMessages } from "../config/constans.js";
 
-class ContainerFirebase {
+class FirebaseDAO {
   addMessage = async (messageToAdd) => {
     const db = admin.firestore();
     const query = db.collection(collectionMessages);
@@ -33,6 +33,6 @@ class ContainerFirebase {
   };
 }
 
-const containerFirebase = new ContainerFirebase();
+// const containerFirebase = new ContainerFirebase();
 
-export default containerFirebase;
+export default FirebaseDAO;

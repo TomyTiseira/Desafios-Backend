@@ -1,9 +1,10 @@
 import { compareSync } from "bcrypt";
-import { usersMongoDb } from "../../dataAccess/mongoDA.js";
+// import { usersMongoDb } from "../../dao/mongoDA.js";
+import { getUsers } from "../../dto/users.js";
 
 const login = async (email, password) => {
   try {
-    const users = await usersMongoDb.getUsers();
+    const users = await getUsers();
 
     const existUser = users.find(
       (user) => user.email === email && compareSync(password, user.password)

@@ -32,7 +32,6 @@ class UsersMongoDb {
   getUsers = async () => await User.find({});
 }
 
-// const mongoDbDA = new MessagesMongoDb();
 export const usersMongoDb = new UsersMongoDb();
 
 export default MessagesMongoDb;

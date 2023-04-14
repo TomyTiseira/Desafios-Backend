@@ -1,0 +1,29 @@
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:04:36.769Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:04:36.887Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:28:40.163Z"}
+{"level":"error","message":"El método y la ruta son: POST /signup. El usuario ya existe.","timestamp":"2023-04-14T14:28:45.584Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:28:45.703Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:28:47.130Z"}
+{"level":"error","message":"El método y la ruta son: POST /login. Datos inválidos.","timestamp":"2023-04-14T14:28:52.027Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:28:52.148Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:28:53.663Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:28:54.702Z"}
+{"level":"error","message":"El método y la ruta son: POST /signup. hashSync is not defined.","timestamp":"2023-04-14T14:28:58.374Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:28:58.503Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:30:47.210Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:30:49.725Z"}
+{"level":"error","message":"El método y la ruta son: POST /signup. El usuario ya existe.","timestamp":"2023-04-14T14:30:54.061Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:30:54.180Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:30:55.359Z"}
+{"level":"error","message":"El método y la ruta son: POST /login. Datos inválidos.","timestamp":"2023-04-14T14:31:01.158Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:31:01.277Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:31:02.297Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:31:03.095Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:31:11.625Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:31:18.818Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:31:18.821Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:31:19.076Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:31:32.635Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:31:32.895Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:32:21.995Z"}
+{"level":"warn","message":"Ruta GET / no implementada.","timestamp":"2023-04-14T14:32:23.138Z"}
