@@ -33,6 +33,4 @@ class FirebaseDAO {
   };
 }
 
-// const containerFirebase = new ContainerFirebase();
-
 export default FirebaseDAO;
