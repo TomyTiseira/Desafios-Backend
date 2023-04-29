@@ -58,3 +58,8 @@ La capa de persistencia contendrá los métodos necesarios para atender la inter
 - El DAO seleccionado (por un parámetro en línea de comandos como lo hicimos anteriormente) será devuelto por una Factory para que la capa de negocio opere con el.
 - Cada uno de estos casos de persistencia, deberán ser implementados usando el patrón singleton que impida crear nuevas instancias de estos mecanismos de acceso a los datos.
 - Comprobar que si llamo a la factory dos veces, con una misma opción elegida, devuelva la misma instancia.
+
+# Reformar para usar Graphql
+
+Reformar la capa de routeo y el controlador para que los requests puedan ser realizados a través del lenguaje de query GraphQL.
+Utilizar Apollo Studio para realizar la prueba funcional de los querys y las mutaciones.
