@@ -27,9 +27,12 @@ class UsersMongoDb {
     const user = new User(userToAdd);
 
     await user.save();
+    return user;
   };
 
   getUsers = async () => await User.find({});
+
+  clear = async () => {}; // Not implement for security reasons.
 }
 
 export const usersMongoDb = new UsersMongoDb();

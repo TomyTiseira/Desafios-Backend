@@ -12,5 +12,6 @@ export const getUsers = async () => {
 };
 
 export const addUser = async (userToAdd) => {
-  await usersMongoDb.addUser(mapUser(userToAdd));
+  const newUser = await usersMongoDb.addUser(mapUser(userToAdd));
+  return newUser;
 };

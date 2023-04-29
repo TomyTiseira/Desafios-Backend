@@ -10,11 +10,12 @@ import infoRouter from "./routes/info.js";
 import randomNumbersRouter from "./routes/randomNumbers.js";
 import cluster from "cluster";
 import { cpus } from "os";
-import { logger } from "./config/winston.js";
 import { timeCookie } from "./config/constans.js";
 import chatRouter from "./routes/chat.js";
 import { createIo } from "./controllers/socket/socket.js";
 import notImplementedRouter from "./routes/notImplemented.js";
+import { expressMiddleware } from "@apollo/server/express4";
+import { serverGQL } from "./graphql/server.js";
 
 const app = express();
 const server = createServer(app);
@@ -59,7 +60,13 @@ if (cluster.isPrimary && configMinimist.modo === "cluster") {
   app.use("/info", infoRouter);
   app.use("/api/randoms", randomNumbersRouter);
   app.use("/", chatRouter);
-  app.use("*", notImplementedRouter);
 
-  server.listen(configMinimist.puerto);
+  serverGQL.start().then(() => {
+    app.use("/graphql", expressMiddleware(serverGQL));
+    app.listen(configMinimist.puerto);
+  });
+
+  // app.use("*", notImplementedRouter);
+
+  // server.listen(configMinimist.puerto);
 }
